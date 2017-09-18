@@ -114,7 +114,7 @@ namespace AddControlsAtRuntimeWindowsFormsApp
                         gp0.Height = 170;
                         gp0.Width = 210;
                        
-                        LoadProjectCostGroupWithParams(gp0, projectCost);
+                        LoadProjectGroupWithParams(gp0, projectCost);
                         this.flowPanel.Controls.Add(gp0);
                         gp0.ResumeLayout(false);
                         break;
@@ -126,7 +126,7 @@ namespace AddControlsAtRuntimeWindowsFormsApp
                         gp1.Height = 170;
                         gp1.Width = 210;
                        
-                        LoadProjectCostGroupWithParams(gp1, Schedule);
+                        LoadProjectGroupWithParams(gp1, Schedule);
                         this.flowPanel.Controls.Add(gp1);
                         gp1.ResumeLayout(false);
                         break;
@@ -138,7 +138,7 @@ namespace AddControlsAtRuntimeWindowsFormsApp
                         gp2.Height = 170;
                         gp2.Width = 210;
                        
-                        LoadProjectCostGroupWithParams(gp2, WOSummary);
+                        LoadProjectGroupWithParams(gp2, WOSummary);
                         this.flowPanel.Controls.Add(gp2);
                         gp2.ResumeLayout(false);
                         break;
@@ -150,7 +150,7 @@ namespace AddControlsAtRuntimeWindowsFormsApp
                         gp3.Height = 170;
                         gp3.Width = 280;
                         
-                        LoadProjectCostMetricsGroupWithParams(gp3, Metrics);
+                        LoadProjectMetricsGroupWithParams(gp3, Metrics);
                         this.flowPanel.Controls.Add(gp3);
                         gp3.ResumeLayout(false);
 
@@ -174,7 +174,7 @@ namespace AddControlsAtRuntimeWindowsFormsApp
                         gp4.Height = 170;
                         gp4.Width = 210;
                         
-                        LoadProjectCostGroupWithParams(gp4, projectCost);
+                        LoadProjectGroupWithParams(gp4, projectCost);
                         this.flowPanel.Controls.Add(gp4);
                         gp4.ResumeLayout(false);
                         break;
@@ -186,7 +186,7 @@ namespace AddControlsAtRuntimeWindowsFormsApp
                         gp5.Height = 170;
                         gp5.Width = 210;
                         
-                        LoadProjectCostGroupWithParams(gp5, Schedule);
+                        LoadProjectGroupWithParams(gp5, Schedule);
                         this.flowPanel.Controls.Add(gp5);
                         gp5.ResumeLayout(false);
                         break;
@@ -198,7 +198,7 @@ namespace AddControlsAtRuntimeWindowsFormsApp
                         gp6.Height = 170;
                         gp6.Width = 210;
                         //gp0.BackColor = Color.Red;
-                        LoadProjectCostGroupWithParams(gp6, WOSummary);
+                        LoadProjectGroupWithParams(gp6, WOSummary);
                         this.flowPanel.Controls.Add(gp6);
                         gp6.ResumeLayout(false);
                         break;
@@ -210,7 +210,7 @@ namespace AddControlsAtRuntimeWindowsFormsApp
                         gp7.Height = 170;
                         gp7.Width = 280;
                        
-                        LoadProjectCostMetricsGroupWithParams(gp7, Metrics);
+                        LoadProjectMetricsGroupWithParams(gp7, Metrics);
                         this.flowPanel.Controls.Add(gp7);
                         gp7.ResumeLayout(false);
                         break;
@@ -373,7 +373,7 @@ namespace AddControlsAtRuntimeWindowsFormsApp
             this.flowPanel.ResumeLayout(false);
         }
 
-        private void LoadProjectCostGroupWithParams(GroupBox gp, params string[] controlNames)
+        private void LoadProjectGroupWithParams(GroupBox gp, params string[] controlNames)
         {
             FlowLayoutPanel flow = new FlowLayoutPanel();
             flow.SuspendLayout();
@@ -397,14 +397,8 @@ namespace AddControlsAtRuntimeWindowsFormsApp
             TableLayoutPanel tbl = new TableLayoutPanel();
             tbl.SuspendLayout();
             tbl.Size = new Size(210, 150);
-          //  tbl.ColumnCount = 2;
-           // tbl.BackColor = Color.Green;
-           // tbl.AutoSize = true;
-           // tbl.Dock = DockStyle.Fill;
-            //tbl.Height = 250;
-            //tbl.Width = 210;
-            //tbl.BorderStyle = BorderStyle.FixedSingle;
-            LoadProjectCostTableWithParams(tbl, controlNames[0], id, controlNames);
+          
+            LoadProjectTableWithParams(tbl, controlNames[0], id, controlNames);
             flow.Controls.Add(tbl);
             tbl.ResumeLayout(false);
            
@@ -412,7 +406,7 @@ namespace AddControlsAtRuntimeWindowsFormsApp
             flow.ResumeLayout(false);
         }
 
-        private void LoadProjectCostMetricsGroupWithParams(GroupBox gp, params string[] controlNames)
+        private void LoadProjectMetricsGroupWithParams(GroupBox gp, params string[] controlNames)
         {
             string lblName = controlNames[0];
            
@@ -486,8 +480,8 @@ namespace AddControlsAtRuntimeWindowsFormsApp
             TableLayoutPanel tbl = new TableLayoutPanel();
             tbl.SuspendLayout();
             tbl.Size = new Size(280, 150);
-           
-            //LoadProjectCostTableWithParams(tbl, controlNames[0], id, controlNames);
+
+            LoadMetricsTableWithParams(tbl, controlNames[0], id, controlNames);
             flow.Controls.Add(tbl);
             tbl.ResumeLayout(false);
 
@@ -495,10 +489,10 @@ namespace AddControlsAtRuntimeWindowsFormsApp
             flow.ResumeLayout(false);
         }
 
-        private void LoadProjectCostTableWithParams(TableLayoutPanel tbl, string tblNameType, int id, params string[] controlNames)
+        private void LoadProjectTableWithParams(TableLayoutPanel tbl, string tblNameType, int id, params string[] controlNames)
         {
             tblNameType = controlNames[0];
-            GetATableData(tblNameType, id, ref lblContent, controlNames);
+            GetATableData(tblNameType, id, ref lblContent);
            
             for (int i = 1; i < controlNames.Length; i++)
             {
@@ -542,10 +536,57 @@ namespace AddControlsAtRuntimeWindowsFormsApp
                                
         }
 
-        private void GetATableData(string tbl, int id, ref string[] lblCont, params string[] controlNames)
+        private void LoadMetricsTableWithParams(TableLayoutPanel tbl, string tblNameType, int id, params string[] controlNames)
         {
-            string tblNane = controlNames[0];
-            switch (tblNane)
+            tblNameType = controlNames[0]; 
+            GetATableData(tblNameType, id, ref lblContent);
+
+            for (int i = 2; i < controlNames.Length; i++)
+            {
+                string lblName = controlNames[i];
+
+                if(lblName != "")
+                {
+                    Label cl = new Label();
+                    cl.SuspendLayout();
+                    cl.Size = new Size(125, 15);
+                    cl.ForeColor = Color.LightBlue;
+                    cl.Text = lblName;
+                    tbl.Controls.Add(cl, 0, i);
+                    cl.ResumeLayout(false);
+                }
+                else
+                {
+                    List<string> lst = new List<string>();
+                    lst.Add("Item#1");
+                    lst.Add("Item#2");
+
+                    ComboBox c = new ComboBox();
+                    c.SuspendLayout();
+                    c.Size = new Size(125, 15);
+                    c.BackColor = Color.LightBlue;
+                    c.DataSource = lst;
+                    tbl.Controls.Add(c, 0, i);
+                    c.ResumeLayout(false);
+
+                }
+
+                Label lV = new Label();
+                lV.SuspendLayout();
+                lV.Size = new Size(75, 15);
+                lV.ForeColor = Color.LightBlue;
+                lV.Text = lblContent[i-2];
+                tbl.Controls.Add(lV, 1, i);
+                lV.ResumeLayout(false);                          
+               
+            }
+
+        }
+
+
+        private void GetATableData(string tblName, int id, ref string[] lblCont)
+        {           
+            switch (tblName)
             {
                 case "Project Cost":
                     GetPCData(id, ref pcResult);
@@ -581,6 +622,7 @@ namespace AddControlsAtRuntimeWindowsFormsApp
                     lblCont[0] = string.Format("{0}", mResult.M_TotalWorkCompleted);
                     lblCont[1] = string.Format("{0}", mResult.M_TotalTracksCompleted);
                     lblCont[2] = string.Format("{0}", mResult.M_TotalTaskCompleted);
+                    lblCont[3] = string.Format("{0}", 0);
                     break;
 
             }
